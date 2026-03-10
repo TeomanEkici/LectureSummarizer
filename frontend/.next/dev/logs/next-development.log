@@ -1,0 +1,5 @@
+[00:00:00.487] Server  LOG     ✓ Ready in 319ms
+[00:00:02.386] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:04.540] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:17.308] Browser ERROR   unhandledRejection: NotAllowedError: Permission dismissed
+[00:02:50.102] Server  LOG     ✓ Compiled in 572ms

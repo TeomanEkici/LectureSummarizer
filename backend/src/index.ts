@@ -1,21 +1,20 @@
 import "dotenv/config";
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import multer from "multer";
 import http from "http";
-import { WebSocketServer } from "ws";
 import { Pool } from "pg";
-import { processTranscriptChunk, runFinalProcessing } from "./llm";
+import { runFinalProcessing } from "./llm";
 import { transcribeAudioChunk } from "./stt";
 import {
   createLectureIfNotExists,
   insertTranscriptChunk,
   upsertGeneratedNotes
 } from "./storage";
+import { extractTextFromSlides } from "./slides";
 
 const app = express();
 const server = http.createServer(app);
-const wss = new WebSocketServer({ server, path: "/ws/lecture" });
 
 app.use(
   cors({
@@ -29,28 +28,13 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL
 });
 
-type LectureContext = {
-  lectureId: number;
-  transcript: string;
-};
-
-const lectureContexts = new Map<string, LectureContext>();
-
-const clients = new Set<WebSocket>();
-
-wss.on("connection", (ws) => {
-  clients.add(ws);
-  ws.on("close", () => {
-    clients.delete(ws);
-  });
-});
-
 app.post(
-  "/api/audio-chunk",
-  upload.single("audio"),
-  async (req, res): Promise<void> => {
+  "/api/upload/audio",
+  upload.single("file"),
+  async (req: Request, res: Response): Promise<void> => {
     try {
-      if (!req.file) {
+      const file = (req as any).file as any | undefined;
+      if (!file) {
         res.status(400).json({ error: "Missing audio file" });
         return;
       }
@@ -66,88 +50,98 @@ app.post(
           lectureTitle
         );
 
-        const transcriptText = await transcribeAudioChunk(req.file.buffer);
-
+        const transcriptText = await transcribeAudioChunk(file.buffer);
         const timestamp = new Date().toISOString();
-        await insertTranscriptChunk(poolClient, lectureId, timestamp, transcriptText);
 
-        const key = `${userId}:${lectureId}`;
-        const existing = lectureContexts.get(key) ?? {
+        await insertTranscriptChunk(
+          poolClient,
           lectureId,
-          transcript: ""
-        };
-        const updatedTranscript =
-          existing.transcript + "\n" + `[${timestamp}] ${transcriptText}`;
-        lectureContexts.set(key, { lectureId, transcript: updatedTranscript });
-
-        const aiOutput = await processTranscriptChunk(
-          updatedTranscript,
+          timestamp,
           transcriptText
         );
 
-        await upsertGeneratedNotes(poolClient, lectureId, aiOutput);
+        // Run a full-pass LLM processing over this lecture.
+        const finalResult = await runFinalProcessing(poolClient, lectureId);
 
-        const wsPayloadTranscript = JSON.stringify({
-          type: "transcript",
-          payload: {
-            timestamp: new Date().toLocaleTimeString(),
-            text: transcriptText
-          }
+        // Keep a copy of the latest generated notes for convenience.
+        await upsertGeneratedNotes(poolClient, lectureId, {
+          notesSection: finalResult.notes[0] ?? {
+            section_title: lectureTitle,
+            key_points: [],
+            definitions: []
+          },
+          flashcards: finalResult.flashcards,
+          quizQuestions: finalResult.quiz
         });
 
-        const wsPayloadNotes = JSON.stringify({
-          type: "notes",
-          payload: aiOutput.notesSection
+        res.json({
+          lectureId,
+          transcript: transcriptText,
+          ...finalResult
         });
-
-        const wsPayloadFlashcards = JSON.stringify({
-          type: "flashcards",
-          payload: aiOutput.flashcards
-        });
-
-        const wsPayloadQuiz = JSON.stringify({
-          type: "quiz",
-          payload: aiOutput.quizQuestions
-        });
-
-        clients.forEach((client) => {
-          if (client.readyState === client.OPEN) {
-            client.send(wsPayloadTranscript);
-            client.send(wsPayloadNotes);
-            client.send(wsPayloadFlashcards);
-            client.send(wsPayloadQuiz);
-          }
-        });
-
-        res.json({ ok: true });
       } finally {
         poolClient.release();
       }
     } catch (err) {
       console.error(err);
-      res.status(500).json({ error: "Failed to process audio chunk" });
+      res.status(500).json({ error: "Failed to process audio upload" });
     }
   }
 );
 
-app.post("/api/lectures/:lectureId/finalize", async (req, res) => {
-  const lectureId = Number(req.params.lectureId);
-  if (!Number.isFinite(lectureId)) {
-    res.status(400).json({ error: "Invalid lecture id" });
-    return;
-  }
+app.post(
+  "/api/upload/slides",
+  upload.single("file"),
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      const file = (req as any).file as any | undefined;
+      if (!file) {
+        res.status(400).json({ error: "Missing slide deck file" });
+        return;
+      }
 
-  const client = await pool.connect();
-  try {
-    const result = await runFinalProcessing(client, lectureId);
-    res.json(result);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to run final processing" });
-  } finally {
-    client.release();
+      const lectureTitle = (req.body.lectureTitle as string) || "Untitled";
+      const userId = 1;
+
+      const poolClient = await pool.connect();
+      try {
+        const lectureId = await createLectureIfNotExists(
+          poolClient,
+          userId,
+          lectureTitle
+        );
+
+        const text = await extractTextFromSlides(file.buffer);
+        const timestamp = new Date().toISOString();
+
+        await insertTranscriptChunk(poolClient, lectureId, timestamp, text);
+
+        const finalResult = await runFinalProcessing(poolClient, lectureId);
+
+        await upsertGeneratedNotes(poolClient, lectureId, {
+          notesSection: finalResult.notes[0] ?? {
+            section_title: lectureTitle,
+            key_points: [],
+            definitions: []
+          },
+          flashcards: finalResult.flashcards,
+          quizQuestions: finalResult.quiz
+        });
+
+        res.json({
+          lectureId,
+          transcript: text,
+          ...finalResult
+        });
+      } finally {
+        poolClient.release();
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Failed to process slide upload" });
+    }
   }
-});
+);
 
 const port = Number(process.env.PORT) || 4000;
 server.listen(port, () => {

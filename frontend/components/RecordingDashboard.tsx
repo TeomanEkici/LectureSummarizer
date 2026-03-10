@@ -1,6 +1,6 @@
-\"use client\";
+"use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import classNames from "classnames";
 
 type Flashcard = {
@@ -23,129 +23,78 @@ type NotesSection = {
   definitions: { term: string; definition: string }[];
 };
 
-type SocketEvent =
-  | { type: "transcript"; payload: { timestamp: string; text: string } }
-  | { type: "notes"; payload: NotesSection }
-  | { type: "flashcards"; payload: Flashcard[] }
-  | { type: "quiz"; payload: QuizQuestion[] };
+type UploadKind = "audio" | "slides";
 
 export const RecordingDashboard = () => {
-  const [isRecording, setIsRecording] = useState(false);
   const [lectureTitle, setLectureTitle] = useState("Untitled Lecture");
-  const [elapsed, setElapsed] = useState(0);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [uploadKind, setUploadKind] = useState<UploadKind>("audio");
+  const [file, setFile] = useState<File | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [summary, setSummary] = useState<string | null>(null);
   const [liveTranscript, setLiveTranscript] = useState<
     { timestamp: string; text: string }[]
   >([]);
   const [notes, setNotes] = useState<NotesSection[]>([]);
   const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
   const [quiz, setQuiz] = useState<QuizQuestion[]>([]);
-  const [activeTab, setActiveTab] = useState<"flashcards" | "quiz" | "key-terms">("flashcards");
+  const [activeTab, setActiveTab] = useState<"flashcards" | "quiz" | "key-terms">(
+    "flashcards"
+  );
 
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const audioChunksRef = useRef<Blob[]>([]);
-  const socketRef = useRef<WebSocket | null>(null);
+  const backendBase =
+    process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
 
-  useEffect(() => {
-    if (isRecording) {
-      timerRef.current = setInterval(() => {
-        setElapsed((prev) => prev + 1);
-      }, 1000);
-    } else if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, [isRecording]);
-
-  useEffect(() => {
-    const socketUrl =
-      process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:4000/ws/lecture";
-    const ws = new WebSocket(socketUrl);
-    socketRef.current = ws;
-
-    ws.onmessage = (event) => {
-      try {
-        const data: SocketEvent = JSON.parse(event.data);
-        if (data.type === "transcript") {
-          setLiveTranscript((prev) => [...prev, data.payload]);
-        } else if (data.type === "notes") {
-          setNotes((prev) => [...prev, data.payload]);
-        } else if (data.type === "flashcards") {
-          setFlashcards(data.payload);
-        } else if (data.type === "quiz") {
-          setQuiz(data.payload);
-        }
-      } catch {
-        // ignore malformed messages
-      }
-    };
-
-    return () => {
-      ws.close();
-    };
-  }, []);
-
-  const startRecording = async () => {
-    if (!navigator.mediaDevices?.getUserMedia) {
-      alert("Your browser does not support audio recording.");
+  const handleGenerate = async () => {
+    if (!file) {
+      alert("Please choose a file first.");
       return;
     }
 
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const mediaRecorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
-
-    mediaRecorderRef.current = mediaRecorder;
-    audioChunksRef.current = [];
-
-    mediaRecorder.ondataavailable = (event) => {
-      if (event.data.size > 0) {
-        audioChunksRef.current.push(event.data);
-        void sendAudioChunk(event.data);
-      }
-    };
-
-    mediaRecorder.start(5000); // request data every 5 seconds
-    setIsRecording(true);
-  };
-
-  const stopRecording = () => {
-    mediaRecorderRef.current?.stop();
-    mediaRecorderRef.current = null;
-    setIsRecording(false);
-
-    if (socketRef.current?.readyState === WebSocket.OPEN) {
-      socketRef.current.send(JSON.stringify({ type: "end_lecture" }));
-    }
-  };
-
-  const sendAudioChunk = async (chunk: Blob) => {
     const formData = new FormData();
-    formData.append("audio", chunk, "chunk.webm");
+    formData.append("file", file);
     formData.append("lectureTitle", lectureTitle);
 
-    try {
-      await fetch(
-        process.env.NEXT_PUBLIC_BACKEND_URL ||
-          "http://localhost:4000/api/audio-chunk",
-        {
-          method: "POST",
-          body: formData
-        }
-      );
-    } catch {
-      // network error, ignore for now
-    }
-  };
+    const endpoint =
+      uploadKind === "audio" ? "/api/upload/audio" : "/api/upload/slides";
 
-  const formatTime = (seconds: number) => {
-    const mm = String(Math.floor(seconds / 60)).padStart(2, "0");
-    const ss = String(seconds % 60).padStart(2, "0");
-    return `${mm}:${ss}`;
+    setIsProcessing(true);
+    setError(null);
+
+    try {
+      const res = await fetch(`${backendBase}${endpoint}`, {
+        method: "POST",
+        body: formData
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || "Failed to generate study materials.");
+      }
+
+      const data = await res.json();
+
+      setSummary(data.summary ?? null);
+      setNotes(data.notes ?? []);
+      setFlashcards(data.flashcards ?? []);
+      setQuiz(data.quiz ?? []);
+
+      const transcriptText: string | undefined = data.transcript;
+      if (transcriptText) {
+        const lines = transcriptText
+          .split(/\n+/)
+          .map((t) => t.trim())
+          .filter(Boolean)
+          .map((text) => ({ timestamp: "", text }));
+        setLiveTranscript(lines);
+      } else {
+        setLiveTranscript([]);
+      }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Unexpected error occurred.");
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const handleDownload = (type: "markdown" | "json") => {
@@ -196,22 +145,64 @@ export const RecordingDashboard = () => {
             className="bg-background border border-gray-700 rounded px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-accent"
             value={lectureTitle}
             onChange={(e) => setLectureTitle(e.target.value)}
+            placeholder="Lecture title"
           />
-          <span className="text-sm text-gray-400">
-            Timer: <span className="font-mono">{formatTime(elapsed)}</span>
-          </span>
+          <div className="flex items-center gap-2 text-xs">
+            <span className="text-gray-400">Source:</span>
+            <button
+              className={classNames(
+                "px-3 py-1 rounded-full",
+                uploadKind === "audio"
+                  ? "bg-accent text-white"
+                  : "bg-background text-gray-400"
+              )}
+              onClick={() => setUploadKind("audio")}
+            >
+              Audio file
+            </button>
+            <button
+              className={classNames(
+                "px-3 py-1 rounded-full",
+                uploadKind === "slides"
+                  ? "bg-accent text-white"
+                  : "bg-background text-gray-400"
+              )}
+              onClick={() => setUploadKind("slides")}
+            >
+              Slide deck
+            </button>
+          </div>
         </div>
         <div className="flex items-center gap-3">
+          <label className="text-xs border border-gray-700 rounded px-3 py-2 cursor-pointer hover:border-accent transition-colors">
+            <span className="text-gray-200">
+              {file ? "Change file" : "Choose file"}
+            </span>
+            <input
+              type="file"
+              accept={
+                uploadKind === "audio"
+                  ? "audio/*"
+                  : ".pdf,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation"
+              }
+              className="hidden"
+              onChange={(e) => {
+                const f = e.target.files?.[0] ?? null;
+                setFile(f);
+              }}
+            />
+          </label>
           <button
-            onClick={isRecording ? stopRecording : startRecording}
+            onClick={handleGenerate}
+            disabled={isProcessing}
             className={classNames(
               "px-4 py-2 rounded text-sm font-medium transition-colors",
-              isRecording
-                ? "bg-red-600 hover:bg-red-500"
+              isProcessing
+                ? "bg-gray-700 text-gray-300 cursor-wait"
                 : "bg-accent hover:bg-indigo-500"
             )}
           >
-            {isRecording ? "Stop Recording" : "Start Recording"}
+            {isProcessing ? "Generating..." : "Generate Study Materials"}
           </button>
         </div>
       </header>
@@ -220,7 +211,7 @@ export const RecordingDashboard = () => {
         <section className="bg-surface rounded-lg border border-gray-800 flex flex-col overflow-hidden">
           <div className="px-4 py-2 border-b border-gray-800 flex items-center justify-between">
             <h2 className="text-sm font-semibold text-gray-200">
-              Live Transcript
+              Transcript / Slide Text
             </h2>
           </div>
           <div className="flex-1 overflow-auto px-4 py-3 space-y-2 text-sm">
@@ -234,7 +225,8 @@ export const RecordingDashboard = () => {
             ))}
             {liveTranscript.length === 0 && (
               <p className="text-xs text-gray-500 italic">
-                Transcript will appear here as the lecture is processed.
+                The extracted transcript or slide text will appear here after
+                processing your file.
               </p>
             )}
           </div>
@@ -247,6 +239,16 @@ export const RecordingDashboard = () => {
             </h2>
           </div>
           <div className="flex-1 overflow-auto px-4 py-3 space-y-4 text-sm">
+            {summary && (
+              <div className="mb-4">
+                <p className="text-xs font-semibold text-gray-400 mb-1">
+                  Summary
+                </p>
+                <p className="text-gray-200 text-sm leading-relaxed">
+                  {summary}
+                </p>
+              </div>
+            )}
             {notes.map((section) => (
               <div key={section.section_title} className="space-y-2">
                 <h3 className="text-xs uppercase tracking-wide text-accent font-semibold">
@@ -276,7 +278,9 @@ export const RecordingDashboard = () => {
             ))}
             {notes.length === 0 && (
               <p className="text-xs text-gray-500 italic">
-                AI-generated notes will appear here in real time.
+                Upload an audio recording or slide deck and click{" "}
+                <span className="font-semibold">Generate Study Materials</span>{" "}
+                to see structured notes here.
               </p>
             )}
           </div>
@@ -321,6 +325,9 @@ export const RecordingDashboard = () => {
             </div>
           </div>
           <div className="flex-1 overflow-auto px-4 py-3 text-sm">
+            {error && (
+              <p className="text-xs text-red-400 mb-2">{error}</p>
+            )}
             {activeTab === "flashcards" && (
               <div className="space-y-3">
                 {flashcards.map((card) => (
