@@ -4,7 +4,7 @@ import cors from "cors";
 import multer from "multer";
 import http from "http";
 import { Pool } from "pg";
-import { runFinalProcessing } from "./llm";
+import { generateStudyMaterialsFromTranscript, runFinalProcessing } from "./llm";
 import { transcribeAudioChunk } from "./stt";
 import {
   createLectureIfNotExists,
@@ -105,15 +105,26 @@ app.post(
 
       const poolClient = await pool.connect();
       try {
+        const text = await extractTextFromSlides(file.buffer);
+        const useDb = !!process.env.DATABASE_URL;
+
+        if (!useDb) {
+          const finalResult = await generateStudyMaterialsFromTranscript(text);
+          res.json({
+            lectureId: null,
+            transcript: text,
+            ...finalResult
+          });
+          return;
+        }
+
         const lectureId = await createLectureIfNotExists(
           poolClient,
           userId,
           lectureTitle
         );
 
-        const text = await extractTextFromSlides(file.buffer);
         const timestamp = new Date().toISOString();
-
         await insertTranscriptChunk(poolClient, lectureId, timestamp, text);
 
         const finalResult = await runFinalProcessing(poolClient, lectureId);

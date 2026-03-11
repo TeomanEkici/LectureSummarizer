@@ -109,12 +109,20 @@ export async function runFinalProcessing(client: PoolClient, lectureId: number) 
     .map((row) => `[${row.timestamp.toISOString?.() ?? row.timestamp}] ${row.text}`)
     .join("\n");
 
+  return generateStudyMaterialsFromTranscript(fullTranscript, lectureId, client);
+}
+
+export async function generateStudyMaterialsFromTranscript(
+  fullTranscript: string,
+  lectureId?: number,
+  client?: PoolClient
+) {
   if (!process.env.OPENAI_API_KEY) {
     return {
       summary: "Summary placeholder (set OPENAI_API_KEY to enable real summaries).",
-      notes: [],
-      flashcards: [],
-      quiz: []
+      notes: [] as NotesSection[],
+      flashcards: [] as Flashcard[],
+      quiz: [] as QuizQuestion[]
     };
   }
 
@@ -173,24 +181,25 @@ Return STRICT JSON with shape:
     flashcards: Flashcard[];
     quiz: QuizQuestion[];
   };
-
-  await client.query(
-    `
-    UPDATE generated_notes
-    SET summary = $1,
-        key_points = $2,
-        flashcards = $3,
-        quiz_questions = $4
-    WHERE lecture_id = $5
-  `,
-    [
-      parsed.summary,
-      JSON.stringify(parsed.notes),
-      JSON.stringify(parsed.flashcards),
-      JSON.stringify(parsed.quiz),
-      lectureId
-    ]
-  );
+  if (client && typeof lectureId === "number") {
+    await client.query(
+      `
+      UPDATE generated_notes
+      SET summary = $1,
+          key_points = $2,
+          flashcards = $3,
+          quiz_questions = $4
+      WHERE lecture_id = $5
+    `,
+      [
+        parsed.summary,
+        JSON.stringify(parsed.notes),
+        JSON.stringify(parsed.flashcards),
+        JSON.stringify(parsed.quiz),
+        lectureId
+      ]
+    );
+  }
 
   return parsed;
 }
