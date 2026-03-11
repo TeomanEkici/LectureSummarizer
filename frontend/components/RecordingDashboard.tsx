@@ -180,11 +180,7 @@ export const RecordingDashboard = () => {
             </span>
             <input
               type="file"
-              accept={
-                uploadKind === "audio"
-                  ? "audio/*"
-                  : "application/pdf,.pdf"
-              }
+              accept={uploadKind === "audio" ? "audio/*" : ""}
               className="hidden"
               onChange={(e) => {
                 const f = e.target.files?.[0] ?? null;

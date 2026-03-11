@@ -179,7 +179,7 @@ const RecordingDashboard = ()=>{
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                         type: "file",
-                                        accept: uploadKind === "audio" ? "audio/*" : ".pdf,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                                        accept: uploadKind === "audio" ? "audio/*" : "",
                                         className: "hidden",
                                         onChange: (e)=>{
                                             const f = e.target.files?.[0] ?? null;
@@ -203,7 +203,7 @@ const RecordingDashboard = ()=>{
                                 children: isProcessing ? "Generating..." : "Generate Study Materials"
                             }, void 0, false, {
                                 fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                lineNumber: 195,
+                                lineNumber: 191,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
@@ -231,12 +231,12 @@ const RecordingDashboard = ()=>{
                                     children: "Transcript / Slide Text"
                                 }, void 0, false, {
                                     fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                    lineNumber: 213,
+                                    lineNumber: 209,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                lineNumber: 212,
+                                lineNumber: 208,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -250,7 +250,7 @@ const RecordingDashboard = ()=>{
                                                     children: line.timestamp
                                                 }, void 0, false, {
                                                     fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                    lineNumber: 220,
+                                                    lineNumber: 216,
                                                     columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -258,13 +258,13 @@ const RecordingDashboard = ()=>{
                                                     children: line.text
                                                 }, void 0, false, {
                                                     fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                    lineNumber: 223,
+                                                    lineNumber: 219,
                                                     columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, `${line.timestamp}-${idx}`, true, {
                                             fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                            lineNumber: 219,
+                                            lineNumber: 215,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))),
                                     liveTranscript.length === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -272,19 +272,19 @@ const RecordingDashboard = ()=>{
                                         children: "The extracted transcript or slide text will appear here after processing your file."
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                        lineNumber: 227,
+                                        lineNumber: 223,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                lineNumber: 217,
+                                lineNumber: 213,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                        lineNumber: 211,
+                        lineNumber: 207,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -297,12 +297,12 @@ const RecordingDashboard = ()=>{
                                     children: "Structured Notes"
                                 }, void 0, false, {
                                     fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                    lineNumber: 237,
+                                    lineNumber: 233,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                lineNumber: 236,
+                                lineNumber: 232,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -316,7 +316,7 @@ const RecordingDashboard = ()=>{
                                                 children: "Summary"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                lineNumber: 244,
+                                                lineNumber: 240,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -324,13 +324,13 @@ const RecordingDashboard = ()=>{
                                                 children: summary
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                lineNumber: 247,
+                                                lineNumber: 243,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                        lineNumber: 243,
+                                        lineNumber: 239,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     notes.map((section)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -341,7 +341,7 @@ const RecordingDashboard = ()=>{
                                                     children: section.section_title
                                                 }, void 0, false, {
                                                     fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                    lineNumber: 254,
+                                                    lineNumber: 250,
                                                     columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -350,12 +350,12 @@ const RecordingDashboard = ()=>{
                                                             children: p
                                                         }, p, false, {
                                                             fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                            lineNumber: 259,
+                                                            lineNumber: 255,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0)))
                                                 }, void 0, false, {
                                                     fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                    lineNumber: 257,
+                                                    lineNumber: 253,
                                                     columnNumber: 17
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 section.definitions.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -366,7 +366,7 @@ const RecordingDashboard = ()=>{
                                                             children: "Key Definitions"
                                                         }, void 0, false, {
                                                             fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                            lineNumber: 264,
+                                                            lineNumber: 260,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -381,7 +381,7 @@ const RecordingDashboard = ()=>{
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                                            lineNumber: 270,
+                                                                            lineNumber: 266,
                                                                             columnNumber: 27
                                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                                         " ",
@@ -389,24 +389,24 @@ const RecordingDashboard = ()=>{
                                                                     ]
                                                                 }, d.term, true, {
                                                                     fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                                    lineNumber: 269,
+                                                                    lineNumber: 265,
                                                                     columnNumber: 25
                                                                 }, ("TURBOPACK compile-time value", void 0)))
                                                         }, void 0, false, {
                                                             fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                            lineNumber: 267,
+                                                            lineNumber: 263,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                    lineNumber: 263,
+                                                    lineNumber: 259,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, section.section_title, true, {
                                             fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                            lineNumber: 253,
+                                            lineNumber: 249,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))),
                                     notes.length === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -419,7 +419,7 @@ const RecordingDashboard = ()=>{
                                                 children: "Generate Study Materials"
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                lineNumber: 282,
+                                                lineNumber: 278,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             " ",
@@ -427,19 +427,19 @@ const RecordingDashboard = ()=>{
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                        lineNumber: 280,
+                                        lineNumber: 276,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                lineNumber: 241,
+                                lineNumber: 237,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                        lineNumber: 235,
+                        lineNumber: 231,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -456,7 +456,7 @@ const RecordingDashboard = ()=>{
                                             children: "Flashcards"
                                         }, void 0, false, {
                                             fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                            lineNumber: 292,
+                                            lineNumber: 288,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -465,7 +465,7 @@ const RecordingDashboard = ()=>{
                                             children: "Quiz"
                                         }, void 0, false, {
                                             fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                            lineNumber: 303,
+                                            lineNumber: 299,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -474,18 +474,18 @@ const RecordingDashboard = ()=>{
                                             children: "Key Terms"
                                         }, void 0, false, {
                                             fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                            lineNumber: 314,
+                                            lineNumber: 310,
                                             columnNumber: 15
                                         }, ("TURBOPACK compile-time value", void 0))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                    lineNumber: 291,
+                                    lineNumber: 287,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                lineNumber: 290,
+                                lineNumber: 286,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -496,7 +496,7 @@ const RecordingDashboard = ()=>{
                                         children: error
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                        lineNumber: 329,
+                                        lineNumber: 325,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     activeTab === "flashcards" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -510,7 +510,7 @@ const RecordingDashboard = ()=>{
                                                             children: card.question
                                                         }, void 0, false, {
                                                             fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                            lineNumber: 338,
+                                                            lineNumber: 334,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -518,13 +518,13 @@ const RecordingDashboard = ()=>{
                                                             children: card.answer
                                                         }, void 0, false, {
                                                             fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                            lineNumber: 339,
+                                                            lineNumber: 335,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, card.id, true, {
                                                     fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                    lineNumber: 334,
+                                                    lineNumber: 330,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0))),
                                             flashcards.length === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -532,13 +532,13 @@ const RecordingDashboard = ()=>{
                                                 children: "Flashcards will be generated as the lecture progresses."
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                lineNumber: 343,
+                                                lineNumber: 339,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                        lineNumber: 332,
+                                        lineNumber: 328,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     activeTab === "quiz" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -556,7 +556,7 @@ const RecordingDashboard = ()=>{
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                            lineNumber: 356,
+                                                            lineNumber: 352,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         q.options && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -565,12 +565,12 @@ const RecordingDashboard = ()=>{
                                                                     children: opt
                                                                 }, opt, false, {
                                                                     fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                                    lineNumber: 362,
+                                                                    lineNumber: 358,
                                                                     columnNumber: 27
                                                                 }, ("TURBOPACK compile-time value", void 0)))
                                                         }, void 0, false, {
                                                             fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                            lineNumber: 360,
+                                                            lineNumber: 356,
                                                             columnNumber: 23
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -581,13 +581,13 @@ const RecordingDashboard = ()=>{
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                            lineNumber: 366,
+                                                            lineNumber: 362,
                                                             columnNumber: 21
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, q.id, true, {
                                                     fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                    lineNumber: 352,
+                                                    lineNumber: 348,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0))),
                                             quiz.length === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -595,13 +595,13 @@ const RecordingDashboard = ()=>{
                                                 children: "A practice quiz will appear here near the end of the lecture."
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                lineNumber: 372,
+                                                lineNumber: 368,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                        lineNumber: 350,
+                                        lineNumber: 346,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     activeTab === "key-terms" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -614,7 +614,7 @@ const RecordingDashboard = ()=>{
                                                                 children: d.term
                                                             }, void 0, false, {
                                                                 fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                                lineNumber: 383,
+                                                                lineNumber: 379,
                                                                 columnNumber: 23
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -625,13 +625,13 @@ const RecordingDashboard = ()=>{
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                                lineNumber: 386,
+                                                                lineNumber: 382,
                                                                 columnNumber: 23
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, `${section.section_title}-${d.term}`, true, {
                                                         fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                        lineNumber: 382,
+                                                        lineNumber: 378,
                                                         columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0)))),
                                             notes.every((s)=>s.definitions.length === 0) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -639,19 +639,19 @@ const RecordingDashboard = ()=>{
                                                 children: "Key terms detected in the lecture will appear here."
                                             }, void 0, false, {
                                                 fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                                lineNumber: 391,
+                                                lineNumber: 387,
                                                 columnNumber: 19
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                        lineNumber: 379,
+                                        lineNumber: 375,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                lineNumber: 327,
+                                lineNumber: 323,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -663,7 +663,7 @@ const RecordingDashboard = ()=>{
                                         children: "Download Notes (Markdown)"
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                        lineNumber: 399,
+                                        lineNumber: 395,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -672,25 +672,25 @@ const RecordingDashboard = ()=>{
                                         children: "Export Study Pack (JSON)"
                                     }, void 0, false, {
                                         fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                        lineNumber: 405,
+                                        lineNumber: 401,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                                lineNumber: 398,
+                                lineNumber: 394,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                        lineNumber: 289,
+                        lineNumber: 285,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/frontend/components/RecordingDashboard.tsx",
-                lineNumber: 210,
+                lineNumber: 206,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
