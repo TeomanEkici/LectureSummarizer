@@ -183,7 +183,7 @@ export const RecordingDashboard = () => {
               accept={
                 uploadKind === "audio"
                   ? "audio/*"
-                  : ".pdf,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                  : "application/pdf,.pdf"
               }
               className="hidden"
               onChange={(e) => {
