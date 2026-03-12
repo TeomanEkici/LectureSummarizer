@@ -1,0 +1,9 @@
+{
+  "name": "ai-lecture-note-generator",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": ["backend"],
+  "scripts": {
+    "dev": "pnpm --filter backend dev"
+  }
+}
